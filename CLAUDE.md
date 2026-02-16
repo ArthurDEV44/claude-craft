@@ -13,6 +13,7 @@ A collection of bilingual (FR/EN) copy-paste prompt templates for Claude Code, l
   - `implement-prd.md` — Implement from a PRD: single user-story, full PRD with agent swarm, or full PRD with /agent-swarm skill
   - `optimize-code.md` — Explore and optimize code at file, folder, or PRD level using context7
   - `design-exploration-prd.md` — Explore UI code with fontofweb design research + context7 stack learning, then write a PRD
+  - `github-issue-prd.md` — Read a GitHub issue, explore the stack via context7, then write a PRD with /ralph-tui-prd
 
 ## Template Conventions
 
