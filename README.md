@@ -1,41 +1,29 @@
-# Prompts — Claude Code Agent Teams
+# Prompts — Claude Code
 
-Ready-to-use prompt templates for orchestrating [Claude Code Agent Teams](https://docs.anthropic.com/en/docs/claude-code/agent-teams) (swarm mode) with tmux split panes.
-
-## Quick Start
-
-1. Launch Claude Code inside tmux:
-
-```bash
-tmux new -s claude-team "claude"
-```
-
-2. Copy-paste any template below into Claude Code, replace the `[PLACEHOLDERS]`, and let the agent team do the work.
+Ready-to-use prompt templates for [Claude Code](https://docs.anthropic.com/en/docs/claude-code), leveraging skills, MCP servers, and agent swarms. Each template is bilingual (FR/EN) and designed to be copy-pasted directly into Claude Code — just replace the `@paths` with your own.
 
 ## Templates
 
-| Template | Description | Agents |
-|----------|-------------|--------|
-| [implement-prd.md](prompts/implement-prd.md) | Implement a full PRD with parallel agents | 3-6 |
-| [debug-hypotheses.md](prompts/debug-hypotheses.md) | Debug with competing hypotheses | 2-5 |
-| [review-pr.md](prompts/review-pr.md) | Multi-angle PR code review | 2-5 |
-| [refactor-codebase.md](prompts/refactor-codebase.md) | Refactor, migrate, or clean up a codebase | 2-6 |
-| [explore-codebase.md](prompts/explore-codebase.md) | Explore and map an unknown codebase | 2-5 |
+| Template | Description |
+|----------|-------------|
+| [ux-redesign-prd.md](prompts/ux-redesign-prd.md) | Generate a UX/UI redesign PRD with design inspiration |
+| [implement-prd.md](prompts/implement-prd.md) | Implement a PRD — single US, full PRD, or agent swarm |
+| [optimize-code.md](prompts/optimize-code.md) | Explore and optimize code (file, folder, or via PRD) |
+| [design-exploration-prd.md](prompts/design-exploration-prd.md) | Explore a UI section with design research, then write a PRD |
 
-Each template comes in multiple variants (simple, advanced, quick) depending on how much control you want.
+## Skills & MCP Used
 
-## Orchestration Patterns
+These prompts reference the following Claude Code skills and MCP servers:
 
-These templates leverage 4 orchestration patterns:
+**Skills:** `/ralph-tui-prd`, `/web-design-guidelines`, `/frontend-design`, `/coss-ui`, `/agent-swarm`
 
-- **Leader** — One coordinator distributes independent subtasks
-- **Swarm** — N similar tasks processed in parallel, no cross-dependencies
-- **Pipeline** — Sequential stages where each depends on the previous
-- **Watchdog** — Parallel work with continuous quality oversight
+**MCP servers:** `fontofweb` (design inspiration), `context7` (library documentation)
 
 ## Prerequisites
 
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) with agent teams enabled:
+- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) with the skills and MCP servers listed above installed
+- [tmux](https://github.com/tmux/tmux) for agent swarm prompts
+- Agent teams enabled:
 
 ```json
 // ~/.claude/settings.json
@@ -46,15 +34,9 @@ These templates leverage 4 orchestration patterns:
 }
 ```
 
-- [tmux](https://github.com/tmux/tmux) installed for split-pane mode
+## Usage
 
-## Usage Tips
-
-- **File ownership**: always assign distinct files/directories to each teammate to avoid conflicts
-- **Plan approval**: use `(plan approval required)` for risky or architectural tasks
-- **Delegate mode**: press `Shift+Tab` to keep the lead as pure orchestrator
-- **Right-size**: 2-5 teammates is the sweet spot — more agents ≠ faster
-- **Context**: teammates don't inherit conversation history — be explicit in spawn prompts
+Copy-paste a template into Claude Code, replace `@paths` (e.g., `@src/components/`, `@tasks/prd-name.md`) with your actual project paths.
 
 ## License
 
