@@ -18,6 +18,7 @@ A collection of bilingual (FR/EN) copy-paste prompt templates for Claude Code, l
   - `pull-build-deploy.md` — Git pull then build and deploy the project
   - `rename-codebase.md` — Rename folders and files following stack best practices using context7
   - `update-skill.md` — Update an existing skill with /skill-creator and context7, save to community folder, commit and push
+  - `review-prd.md` — Audit an existing PRD for consistency, completeness, and up-to-date MCP/skills references using context7
 
 ## Template Conventions
 
