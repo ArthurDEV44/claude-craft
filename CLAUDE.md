@@ -15,6 +15,9 @@ A collection of bilingual (FR/EN) copy-paste prompt templates for Claude Code, l
   - `design-exploration-prd.md` — Explore UI code with fontofweb design research + context7 stack learning, then write a PRD
   - `github-issue-prd.md` — Read a GitHub issue, explore the stack via context7, then write a PRD with /ralph-tui-prd
   - `design-review-component.md` — Review a single component's design using fontofweb for inspiration and context7 for stack understanding
+  - `pull-build-deploy.md` — Git pull then build and deploy the project
+  - `rename-codebase.md` — Rename folders and files following stack best practices using context7
+  - `update-skill.md` — Update an existing skill with /skill-creator and context7, save to community folder, commit and push
 
 ## Template Conventions
 
