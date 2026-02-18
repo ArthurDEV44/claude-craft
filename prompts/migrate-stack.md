@@ -1,51 +1,51 @@
 # Migrate Stack
 
-Migrate code from one technology to another, using context7 to learn both the source and target stacks.
+Perform a full audit of the current codebase, then write a migration PRD with /ralph-tui-prd using context7 to learn both the source and target stacks.
 
 ## Frontend migration
 
-Migrate a frontend folder from one framework to another.
+Audit and plan migration of a frontend codebase from one framework to another.
 
 ### FR
 
 ```
-Explore the @src/ folder to understand the current Angular codebase, then migrate it to Next.js with React and TailwindCSS. Use context7 to deepen your understanding of both Angular and Next.js, and use the /next-best-practices skill as reference.
+Perform a full audit of the @src/ folder to understand the current Angular codebase (architecture, components, routing, state management, dependencies), then write a PRD in the @tasks folder with /ralph-tui-prd to migrate to Next.js with React and TailwindCSS. Use context7 to deepen your understanding of both Angular and Next.js, and use the /next-best-practices skill as reference.
 ```
 
 ### EN
 
 ```
-Explore the @src/ folder to understand the current Angular codebase, then migrate it to Next.js with React and TailwindCSS. Use context7 to deepen your understanding of both Angular and Next.js, and use the /next-best-practices skill as reference.
+Perform a full audit of the @src/ folder to understand the current Angular codebase (architecture, components, routing, state management, dependencies), then write a PRD in the @tasks folder with /ralph-tui-prd to migrate to Next.js with React and TailwindCSS. Use context7 to deepen your understanding of both Angular and Next.js, and use the /next-best-practices skill as reference.
 ```
 
 ## Backend migration
 
-Migrate a backend folder from one framework/language to another.
+Audit and plan migration of a backend codebase from one framework/language to another.
 
 ### FR
 
 ```
-Explore the @backend/ folder to understand the current Fastify/Node.js codebase, then migrate it to Rust with Axum and SeaORM. Use context7 to deepen your understanding of both Fastify and the Rust stack (Axum, SeaORM, Tokio).
+Perform a full audit of the @backend/ folder to understand the current Fastify/Node.js codebase (architecture, routes, middleware, database layer, dependencies), then write a PRD in the @tasks folder with /ralph-tui-prd to migrate to Rust with Axum and SeaORM. Use context7 to deepen your understanding of both Fastify and the Rust stack (Axum, SeaORM, Tokio).
 ```
 
 ### EN
 
 ```
-Explore the @backend/ folder to understand the current Fastify/Node.js codebase, then migrate it to Rust with Axum and SeaORM. Use context7 to deepen your understanding of both Fastify and the Rust stack (Axum, SeaORM, Tokio).
+Perform a full audit of the @backend/ folder to understand the current Fastify/Node.js codebase (architecture, routes, middleware, database layer, dependencies), then write a PRD in the @tasks folder with /ralph-tui-prd to migrate to Rust with Axum and SeaORM. Use context7 to deepen your understanding of both Fastify and the Rust stack (Axum, SeaORM, Tokio).
 ```
 
-## Migration PRD
+## Full stack migration
 
-When the migration is too large for a single session: generate a PRD split into user stories.
+Audit and plan migration of both frontend and backend in a single PRD.
 
 ### FR
 
 ```
-Explore the @src/ folder to understand the current codebase, then write a PRD in the @tasks folder with /ralph-tui-prd to migrate from Angular to Next.js with React and TailwindCSS. Use context7 to deepen your understanding of both the source and target stacks.
+Perform a full audit of the entire codebase to understand the current stack (frontend: @src/ with Angular, backend: @backend/ with Fastify/Node.js — architecture, components, routes, database layer, shared types, dependencies), then write a PRD in the @tasks folder with /ralph-tui-prd to migrate the frontend to Next.js with React and TailwindCSS, and the backend to Rust with Axum and SeaORM. Use context7 to deepen your understanding of both the source and target stacks.
 ```
 
 ### EN
 
 ```
-Explore the @src/ folder to understand the current codebase, then write a PRD in the @tasks folder with /ralph-tui-prd to migrate from Angular to Next.js with React and TailwindCSS. Use context7 to deepen your understanding of both the source and target stacks.
+Perform a full audit of the entire codebase to understand the current stack (frontend: @src/ with Angular, backend: @backend/ with Fastify/Node.js — architecture, components, routes, database layer, shared types, dependencies), then write a PRD in the @tasks folder with /ralph-tui-prd to migrate the frontend to Next.js with React and TailwindCSS, and the backend to Rust with Axum and SeaORM. Use context7 to deepen your understanding of both the source and target stacks.
 ```
