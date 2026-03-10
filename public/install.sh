@@ -3,12 +3,12 @@ set -euo pipefail
 
 # Claude Craft — Workflow & Agent Installer
 # Usage:
-#   curl -fsSL https://claude-craft.vercel.app/install.sh | bash                  # Install all
-#   curl -fsSL https://claude-craft.vercel.app/install.sh | bash -s -- workflow meta-code
-#   curl -fsSL https://claude-craft.vercel.app/install.sh | bash -s -- agent agent-docs
-#   curl -fsSL https://claude-craft.vercel.app/install.sh | bash -s -- all
+#   curl -fsSL https://claude-craft-two.vercel.app/install.sh | bash                  # Install all
+#   curl -fsSL https://claude-craft-two.vercel.app/install.sh | bash -s -- workflow meta-code
+#   curl -fsSL https://claude-craft-two.vercel.app/install.sh | bash -s -- agent agent-docs
+#   curl -fsSL https://claude-craft-two.vercel.app/install.sh | bash -s -- all
 
-BASE_URL="https://claude-craft.vercel.app/registry"
+BASE_URL="https://claude-craft-two.vercel.app/registry"
 SKILLS_DIR="$HOME/.claude/skills"
 AGENTS_DIR="$HOME/.claude/agents"
 

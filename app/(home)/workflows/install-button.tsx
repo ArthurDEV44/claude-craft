@@ -47,7 +47,7 @@ function DownloadIcon({ className }: { className?: string }) {
   );
 }
 
-const BASE_URL = "https://claude-craft.vercel.app";
+const BASE_URL = "https://claude-craft-two.vercel.app";
 
 export function InstallAllBlock() {
   const command = `curl -fsSL ${BASE_URL}/install.sh | bash`;
