@@ -9,14 +9,6 @@ import {
 } from "@/lib/skills-data";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardPanel,
-  CardFooter,
-} from "@/components/ui/card";
 import { Tabs, TabsList, TabsTab, TabsPanel } from "@/components/ui/tabs";
 import {
   Select,
@@ -34,20 +26,6 @@ const categories: Array<{ value: string; label: string; count: number }> = [
     count: skills.filter((s) => s.category === key).length,
   })),
 ];
-
-function ExternalLinkIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 16 16"
-      fill="currentColor"
-      className={className}
-    >
-      <path d="M8.75 3.5a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0V5.56l-4.22 4.22a.75.75 0 1 1-1.06-1.06l4.22-4.22H9.5a.75.75 0 0 1-.75-.75Z" />
-      <path d="M3.5 4a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V9.25a.75.75 0 0 1 1.5 0v3.25A2 2 0 0 1 11.5 14.5h-8A2 2 0 0 1 1.5 12.5v-8A2 2 0 0 1 3.5 2.5h3.25a.75.75 0 0 1 0 1.5H3.5Z" />
-    </svg>
-  );
-}
 
 function FileIcon({ className }: { className?: string }) {
   return (
@@ -130,13 +108,13 @@ function CopyButton({ skillName }: { skillName: string }) {
     <button
       type="button"
       onClick={handleCopy}
-      className="inline-flex cursor-pointer items-center gap-1 rounded-md border border-input bg-background px-2 py-1 text-xs font-medium text-muted-foreground shadow-xs/5 transition-colors hover:bg-accent/50 hover:text-foreground"
+      className="inline-flex cursor-pointer items-center gap-1 border border-home-border px-2 py-0.5 font-mono text-xs text-home-text-muted transition-colors duration-150 hover:border-home-accent/40 hover:text-home-text"
       title={command}
     >
       {copied ? (
         <>
           <CheckIcon className="size-3 text-emerald-500" />
-          Copied!
+          <span className="text-emerald-500">Copied!</span>
         </>
       ) : (
         <>
@@ -167,20 +145,18 @@ export function SkillsGrid() {
 
   return (
     <div className="w-full">
-      {/* Section heading */}
-      <h2 className="mb-6 text-2xl font-semibold">Browse Skills</h2>
-
-      {/* Search + Tabs + Grid */}
       <Tabs
         value={activeTab}
         onValueChange={(val) => setActiveTab(val as string)}
       >
         {/* Filter bar */}
-        <div className="pb-4 pt-1">
-          <div className="relative mb-4">
+        <div className="pb-6">
+          {/* Search — prominent, full-width */}
+          <div className="relative mb-6">
             <SearchIcon className="pointer-events-none absolute left-3 top-1/2 z-10 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               type="search"
+              size="lg"
               placeholder="Search skills..."
               className="[&_[data-slot=input]]:pl-9"
               value={search}
@@ -188,7 +164,7 @@ export function SkillsGrid() {
             />
           </div>
 
-          {/* Mobile: Select */}
+          {/* Mobile: Select dropdown */}
           <div className="sm:hidden">
             <Select
               value={activeTab}
@@ -207,83 +183,81 @@ export function SkillsGrid() {
             </Select>
           </div>
 
-          {/* Desktop: Tabs */}
-          <TabsList className="hidden sm:flex">
+          {/* Desktop: Underline tabs */}
+          <TabsList variant="underline" className="hidden sm:flex">
             {categories.map((cat) => (
               <TabsTab key={cat.value} value={cat.value}>
                 {cat.label}
-                <span className="ml-1 text-muted-foreground">({cat.count})</span>
+                <span className="ml-1 text-muted-foreground">
+                  ({cat.count})
+                </span>
               </TabsTab>
             ))}
           </TabsList>
         </div>
 
         {/* Grid content */}
-        <TabsPanel value={activeTab} className="pt-8">
-            {/* Result count — shown only when filtering */}
-            {(search !== "" || activeTab !== "all") && filtered.length > 0 && (
-              <p className="mb-6 text-sm text-muted-foreground">
-                Showing {filtered.length} of {skills.length} skills
-              </p>
-            )}
+        <TabsPanel value={activeTab} className="pt-4">
+          {/* Result count — shown when filtering */}
+          {(search !== "" || activeTab !== "all") && filtered.length > 0 && (
+            <p className="mb-6 font-mono text-xs text-home-text-muted">
+              {filtered.length} of {skills.length} skills
+            </p>
+          )}
 
-            {filtered.length === 0 ? (
-              <div className="py-16 text-center text-muted-foreground">
-                <p className="text-lg font-medium">No skills found</p>
-                <p className="mt-1 text-sm">
-                  Try adjusting your search or filter.
-                </p>
-              </div>
-            ) : (
-              <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {filtered.map((skill) => {
-                  const meta = categoryMeta[skill.category];
-                  return (
-                    <a
-                      key={skill.name}
-                      href={`${GITHUB_REPO}/tree/main/skills/${skill.name}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group block outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-2xl"
-                    >
-                      <Card className="h-full">
-                        <CardHeader>
-                          <div className="flex items-start justify-between gap-2">
-                            <div>
-                              <CardTitle className="text-base">
-                                {skill.title}
-                              </CardTitle>
-                              <p className="font-mono text-xs text-muted-foreground">
-                                {skill.name}
-                              </p>
-                            </div>
-                            <Badge
-                              variant="outline"
-                              size="sm"
-                              className={meta.color}
-                            >
-                              {meta.label}
-                            </Badge>
-                          </div>
-                          <CardDescription className="line-clamp-2">
-                            {skill.description}
-                          </CardDescription>
-                        </CardHeader>
-                        <CardFooter className="mt-auto justify-between text-sm text-muted-foreground">
-                          <span className="inline-flex items-center gap-1.5">
-                            <FileIcon className="size-3.5" />
-                            {skill.references}{" "}
-                            {skill.references === 1 ? "ref" : "refs"}
-                          </span>
-                          <CopyButton skillName={skill.name} />
-                        </CardFooter>
-                      </Card>
-                    </a>
-                  );
-                })}
-              </div>
-            )}
-          </TabsPanel>
+          {filtered.length === 0 ? (
+            <div className="py-16 text-home-text-muted">
+              <p className="text-base font-medium text-home-text">
+                No skills found
+              </p>
+              <p className="mt-1 text-sm font-light">
+                Try adjusting your search or filter.
+              </p>
+            </div>
+          ) : (
+            <div className="grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {filtered.map((skill) => {
+                const meta = categoryMeta[skill.category];
+                const borderClass = meta.borderColor.replace(
+                  "border-t-",
+                  "border-l-",
+                );
+                return (
+                  <a
+                    key={skill.name}
+                    href={`${GITHUB_REPO}/tree/main/skills/${skill.name}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`group block border-l-4 ${borderClass} py-4 pl-5 pr-4 outline-none transition-colors duration-150 hover:bg-home-surface focus-visible:ring-2 focus-visible:ring-ring`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="text-sm font-semibold text-home-text">
+                        {skill.title}
+                      </p>
+                      <Badge variant="outline" size="sm" className="shrink-0">
+                        {meta.label}
+                      </Badge>
+                    </div>
+                    <p className="mt-0.5 font-mono text-xs text-home-text-muted">
+                      {skill.name}
+                    </p>
+                    <p className="mt-2 max-w-[55ch] text-sm font-light leading-relaxed text-home-text-muted line-clamp-2">
+                      {skill.description}
+                    </p>
+                    <div className="mt-3 flex items-center justify-between">
+                      <span className="inline-flex items-center gap-1.5 font-mono text-xs text-home-text-muted">
+                        <FileIcon className="size-3" />
+                        {skill.references}{" "}
+                        {skill.references === 1 ? "ref" : "refs"}
+                      </span>
+                      <CopyButton skillName={skill.name} />
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          )}
+        </TabsPanel>
       </Tabs>
     </div>
   );

@@ -34,6 +34,63 @@
   }
 }
 
+/* Homepage OKLCH design tokens */
+:root {
+  --home-bg: oklch(97% 0.01 80);
+  --home-surface: oklch(94.5% 0.012 80);
+  --home-text: oklch(17% 0.015 80);
+  --home-text-muted: oklch(50% 0.02 80);
+  --home-accent: oklch(60% 0.15 55);
+  --home-accent-hover: oklch(55% 0.16 55);
+  --home-border: oklch(88% 0.01 80);
+  --home-border-subtle: oklch(91% 0.008 80);
+  --home-agent: oklch(60% 0.18 158);
+  --cat-planning: oklch(55% 0.14 75);
+  --cat-implementation: oklch(50% 0.12 250);
+  --cat-quality: oklch(50% 0.14 155);
+  --cat-research: oklch(50% 0.10 270);
+  --cat-creation: oklch(55% 0.13 25);
+}
+
+.dark {
+  --home-bg: oklch(10% 0.01 60);
+  --home-surface: oklch(14% 0.015 60);
+  --home-text: oklch(93% 0.01 60);
+  --home-text-muted: oklch(55% 0.015 60);
+  --home-accent: oklch(65% 0.15 55);
+  --home-accent-hover: oklch(60% 0.16 55);
+  --home-border: oklch(25% 0.012 60);
+  --home-border-subtle: oklch(22% 0.01 60);
+  --home-agent: oklch(70% 0.17 158);
+  --cat-planning: oklch(78% 0.12 80);
+  --cat-implementation: oklch(72% 0.10 250);
+  --cat-quality: oklch(72% 0.12 155);
+  --cat-research: oklch(72% 0.08 270);
+  --cat-creation: oklch(78% 0.10 25);
+}
+
+@utility grain {
+  position: relative;
+  isolation: isolate;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='3' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 128px 128px;
+    opacity: 0.025;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+.dark .grain::after {
+  mix-blend-mode: soft-light;
+  opacity: 0.05;
+}
+
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -67,6 +124,20 @@
   --color-success: var(--success);
   --color-info-foreground: var(--info-foreground);
   --color-info: var(--info);
+  --color-home-bg: var(--home-bg);
+  --color-home-surface: var(--home-surface);
+  --color-home-text: var(--home-text);
+  --color-home-text-muted: var(--home-text-muted);
+  --color-home-accent: var(--home-accent);
+  --color-home-accent-hover: var(--home-accent-hover);
+  --color-home-border: var(--home-border);
+  --color-home-border-subtle: var(--home-border-subtle);
+  --color-home-agent: var(--home-agent);
+  --color-cat-planning: var(--cat-planning);
+  --color-cat-implementation: var(--cat-implementation);
+  --color-cat-quality: var(--cat-quality);
+  --color-cat-research: var(--cat-research);
+  --color-cat-creation: var(--cat-creation);
 }
 
 :root {

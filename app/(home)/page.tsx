@@ -1,13 +1,5 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardPanel,
-  CardTitle,
-} from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 
 const GITHUB_URL = 'https://github.com/ArthurDEV44/claude-craft';
 
@@ -56,6 +48,16 @@ const categories = [
   },
 ];
 
+/* Bento grid column spans — size encodes importance */
+const gridSpans = [
+  'col-span-12 md:col-span-7',
+  'col-span-12 md:col-span-5',
+  'col-span-12 sm:col-span-6 md:col-span-3',
+  'col-span-12 sm:col-span-6 md:col-span-5',
+  'col-span-12 sm:col-span-12 md:col-span-4',
+  'col-span-12',
+];
+
 function ArrowRightIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -86,54 +88,63 @@ function GitHubIcon({ className }: { className?: string }) {
   );
 }
 
-export default function HomePage() {
+function LinkedInIcon({ className }: { className?: string }) {
   return (
-    <main className="flex min-w-0 flex-1 flex-col items-center overflow-x-hidden">
-      {/* Hero */}
-      <section className="relative flex w-full flex-col items-center px-4 pb-16 pt-16 text-center sm:px-6 sm:pt-24">
-        {/* Background glow */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[500px] overflow-hidden">
-          <div className="absolute left-1/2 top-1/2 h-[300px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/[0.07] blur-[100px]" />
-        </div>
+    <svg
+      viewBox="0 0 16 16"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M12.225 12.225h-1.778V9.44c0-.664-.012-1.519-.925-1.519-.926 0-1.068.724-1.068 1.47v2.834H6.676V6.498h1.707v.783h.024c.348-.594.996-.95 1.684-.925 1.802 0 2.135 1.185 2.135 2.728l-.001 3.14ZM4.67 5.715a1.037 1.037 0 0 1-1.032-1.031c0-.566.466-1.032 1.032-1.032.566 0 1.031.466 1.032 1.032 0 .566-.466 1.032-1.032 1.032Zm.889 6.51h-1.78V6.498h1.78v5.727ZM13.11 2H2.885A.88.88 0 0 0 2 2.866v10.268a.88.88 0 0 0 .885.866h10.226a.882.882 0 0 0 .889-.866V2.865A.88.88 0 0 0 13.111 2Z" />
+    </svg>
+  );
+}
 
-        <div className="max-w-2xl">
-          <p className="mb-4 font-mono text-sm font-medium tracking-widest text-primary/80 uppercase">
-            Prompt Templates for Claude Code
+export default function HomePage() {
+  const primaryCats = categories.slice(0, 2);
+  const secondaryCats = categories.slice(2, 5);
+  const communityCat = categories[5];
+
+  return (
+    <main className="flex min-w-0 flex-1 flex-col overflow-x-hidden">
+      {/* Hero — left-aligned, typography-driven, grain texture */}
+      <section className="grain w-full px-4 pt-20 pb-24 sm:px-6 sm:pt-32 md:pb-32">
+        <div className="mx-auto max-w-5xl">
+          <p className="mb-6 font-mono text-xs font-normal tracking-[0.1em] uppercase text-home-text-muted">
+            Prompt templates for Claude Code
           </p>
-          <h1 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+          <h1 className="mb-6 max-w-[15ch] font-extrabold leading-[0.95] tracking-[-0.04em] text-home-text text-[clamp(3rem,2rem+4vw,5.5rem)]">
             Claude Craft
           </h1>
-          <p className="mb-6 text-lg text-fd-muted-foreground">
+          <p className="mb-10 max-w-[50ch] text-lg font-light leading-relaxed text-home-text-muted">
             Ship faster with ready-made prompts — PRD generation, code review,
-            design audits, security scans, and more. Copy, paste, done.
+            design audits, security scans, and more.
           </p>
 
           {/* Stats */}
-          <div className="mb-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 font-mono text-sm text-muted-foreground sm:gap-x-6">
+          <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs text-home-text-muted">
             <span>
-              <span className="font-semibold text-foreground">15</span> prompts
+              <span className="font-semibold text-home-text">15</span> prompts
             </span>
-            <span className="text-border">|</span>
             <span>
-              <span className="font-semibold text-foreground">5</span>{' '}
+              <span className="font-semibold text-home-text">6</span>{' '}
               categories
             </span>
-            <span className="text-border">|</span>
             <span>
-              <span className="font-semibold text-foreground">FR/EN</span>{' '}
+              <span className="font-semibold text-home-text">FR/EN</span>{' '}
               bilingual
             </span>
           </div>
 
           {/* CTAs */}
-          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button size="lg" className="w-full sm:w-auto" render={<Link href="/docs" />}>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button size="lg" render={<Link href="/docs" />}>
               Browse Prompts
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="w-full sm:w-auto"
               render={
                 <a
                   href={GITHUB_URL}
@@ -143,71 +154,99 @@ export default function HomePage() {
               }
             >
               <GitHubIcon className="size-4" />
-              View on GitHub
+              GitHub
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Divider */}
-      <div className="w-full max-w-5xl px-4 sm:px-6">
-        <Separator className="bg-gradient-to-r from-transparent via-border to-transparent" />
-      </div>
+      {/* Categories — bento grid */}
+      <section className="w-full px-4 pt-16 pb-24 sm:px-6 sm:pt-24">
+        <div className="mx-auto max-w-5xl">
+          <p className="mb-3 font-mono text-xs font-normal tracking-[0.1em] uppercase text-home-text-muted">
+            Categories
+          </p>
+          <h2 className="mb-12 font-extrabold tracking-[-0.02em] text-home-text text-[clamp(1.5rem,1.2rem+1.5vw,2rem)]">
+            Explore by workflow
+          </h2>
 
-      {/* Section heading */}
-      <div className="mt-10 max-w-2xl px-4 text-center sm:mt-16 sm:px-6">
-        <h2 className="mb-2 text-2xl font-semibold">Explore by Category</h2>
-        <p className="text-fd-muted-foreground">
-          Pick a workflow to get started, or browse all prompts in the docs.
-        </p>
-      </div>
-
-      {/* Card grid */}
-      <div className="mt-8 grid w-full max-w-5xl gap-4 px-4 sm:mt-10 sm:gap-6 sm:px-6 sm:grid-cols-2 lg:grid-cols-3">
-        {categories.map((cat, i) => (
-          <Link
-            key={cat.title}
-            href={cat.href}
-            className="group rounded-2xl outline-none motion-safe:animate-fade-up focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            style={{ animationDelay: `${i * 80}ms` }}
-          >
-            <Card className="h-full transition-all duration-200 group-hover:-translate-y-0.5 group-hover:shadow-md">
-              <CardHeader>
-                <CardTitle className="text-base">{cat.title}</CardTitle>
-                <CardDescription>{cat.description}</CardDescription>
-              </CardHeader>
-              <CardPanel>
-                <ul className="space-y-1 text-sm text-muted-foreground">
+          <div className="grid grid-cols-12 gap-4 sm:gap-5">
+            {/* Primary categories — large cards, accent left border */}
+            {primaryCats.map((cat, i) => (
+              <Link
+                key={cat.title}
+                href={cat.href}
+                className={`group ${gridSpans[i]} rounded-none border-l border-l-home-border p-6 outline-none transition-colors duration-150 hover:bg-home-surface focus-visible:ring-2 focus-visible:ring-ring`}
+              >
+                <p className="mb-1 font-mono text-xs tracking-[0.08em] uppercase text-home-text-muted">
+                  {cat.title}
+                </p>
+                <p className="mb-4 max-w-[45ch] text-sm font-light leading-relaxed text-home-text-muted">
+                  {cat.description}
+                </p>
+                <div className="flex flex-wrap gap-2">
                   {cat.items.map((item) => (
-                    <li key={item} className="before:mr-2 before:content-['·']">
+                    <span
+                      key={item}
+                      className="rounded-sm border border-home-border px-2.5 py-1 font-mono text-xs text-home-text"
+                    >
                       {item}
-                    </li>
+                    </span>
                   ))}
-                </ul>
-              </CardPanel>
-              <div className="flex items-center px-6 pb-5 pt-2">
-                <span className="inline-flex items-center gap-1 text-sm font-medium text-primary opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                  Explore
-                  <ArrowRightIcon className="size-3.5" />
-                </span>
+                </div>
+              </Link>
+            ))}
+
+            {/* Secondary categories — smaller, surface background */}
+            {secondaryCats.map((cat, i) => (
+              <Link
+                key={cat.title}
+                href={cat.href}
+                className={`group ${gridSpans[i + 2]} rounded-sm border border-home-border-subtle bg-home-surface p-5 outline-none transition-colors duration-150 hover:border-home-border focus-visible:ring-2 focus-visible:ring-ring`}
+              >
+                <p className="mb-1 text-sm font-semibold text-home-text">
+                  {cat.title}
+                </p>
+                <p className="mb-3 text-sm font-light text-home-text-muted">
+                  {cat.description}
+                </p>
+                <p className="font-mono text-xs text-home-text-muted">
+                  {cat.items.join(' \u00b7 ')}
+                </p>
+              </Link>
+            ))}
+
+            {/* Community Skills — full-width banner */}
+            <Link
+              href={communityCat.href}
+              className="group col-span-12 flex items-center justify-between gap-4 rounded-sm border border-home-border bg-home-surface p-6 outline-none transition-colors duration-150 hover:border-home-accent focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <div>
+                <p className="mb-1 text-sm font-semibold text-home-text">
+                  {communityCat.title}
+                </p>
+                <p className="text-sm font-light text-home-text-muted">
+                  {communityCat.description}
+                </p>
               </div>
-            </Card>
-          </Link>
-        ))}
-      </div>
+              <ArrowRightIcon className="size-4 shrink-0 text-home-text-muted transition-colors duration-150 group-hover:text-home-accent" />
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
-      <footer className="mt-16 w-full border-t px-4 py-8 sm:mt-20 sm:px-6">
-        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 sm:flex-row">
-          <p className="text-sm text-muted-foreground">
+      <footer className="w-full border-t border-home-border-subtle px-4 py-12 sm:px-6">
+        <div className="mx-auto flex max-w-5xl flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+          <p className="font-mono text-xs text-home-text-muted">
             Built by Arthur Strivex
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             <a
               href="https://strivex.fr/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="font-mono text-xs text-home-text-muted transition-colors duration-150 hover:text-home-text"
             >
               strivex.fr
             </a>
@@ -215,7 +254,7 @@ export default function HomePage() {
               href="https://github.com/ArthurDEV44"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground transition-colors hover:text-foreground"
+              className="text-home-text-muted transition-colors duration-150 hover:text-home-text"
               aria-label="GitHub"
             >
               <GitHubIcon className="size-4" />
@@ -224,17 +263,10 @@ export default function HomePage() {
               href="https://www.linkedin.com/in/arthur-jean-strivex/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground transition-colors hover:text-foreground"
+              className="text-home-text-muted transition-colors duration-150 hover:text-home-text"
               aria-label="LinkedIn"
             >
-              <svg
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                className="size-4"
-                aria-hidden="true"
-              >
-                <path d="M12.225 12.225h-1.778V9.44c0-.664-.012-1.519-.925-1.519-.926 0-1.068.724-1.068 1.47v2.834H6.676V6.498h1.707v.783h.024c.348-.594.996-.95 1.684-.925 1.802 0 2.135 1.185 2.135 2.728l-.001 3.14ZM4.67 5.715a1.037 1.037 0 0 1-1.032-1.031c0-.566.466-1.032 1.032-1.032.566 0 1.031.466 1.032 1.032 0 .566-.466 1.032-1.032 1.032Zm.889 6.51h-1.78V6.498h1.78v5.727ZM13.11 2H2.885A.88.88 0 0 0 2 2.866v10.268a.88.88 0 0 0 .885.866h10.226a.882.882 0 0 0 .889-.866V2.865A.88.88 0 0 0 13.111 2Z" />
-              </svg>
+              <LinkedInIcon className="size-4" />
             </a>
           </div>
         </div>
