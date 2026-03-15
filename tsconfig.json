@@ -25,18 +25,12 @@
     "paths": {
       "@/*": [
         "./*"
-      ],
-      "@/.source": [
-        "./.source"
       ]
     }
   },
   "include": [
-    "**/*.mdx",
     "**/*.ts",
     "**/*.tsx",
-    ".source/**/*.js",
-    ".source/**/*.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { SkillsGrid } from "@/components/skills-grid";
 import { skills, categoryMeta, GITHUB_REPO } from "@/lib/skills-data";
 import { Button } from "@/components/ui/button";
@@ -109,24 +108,18 @@ export default function SkillsPage() {
             Skills are open source and community-driven. Create a skill to share
             specialized knowledge with Claude Code users everywhere.
           </p>
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button render={<Link href="/docs/skills/create-skill" />}>
-              Create a Skill
-            </Button>
-            <Button
-              variant="outline"
-              render={
-                <a
-                  href={GITHUB_REPO}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                />
-              }
-            >
-              <GitHubIcon className="size-4" />
-              View on GitHub
-            </Button>
-          </div>
+          <Button
+            render={
+              <a
+                href={GITHUB_REPO}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
+          >
+            <GitHubIcon className="size-4" />
+            View on GitHub
+          </Button>
         </div>
       </footer>
     </main>

@@ -1,28 +1,14 @@
 import type { Metadata } from "next";
-import {
-  workflows,
-  subagents,
-  categoryMeta,
-  type WorkflowCategory,
-} from "@/lib/workflows-data";
+import { workflows, subagents, GITHUB_REPO } from "@/lib/workflows-data";
 import { InstallAllBlock, InstallButton } from "./install-button";
 
 export const metadata: Metadata = {
   title: "Workflows & Agents",
   description:
-    "13 multi-agent workflows and 3 subagents that orchestrate Claude Code for end-to-end development — from PRD generation to implementation, review, and debugging.",
+    "Multi-agent workflows and subagents that orchestrate Claude Code for end-to-end development — from PRD generation to implementation, review, and debugging.",
 };
 
-const totalPhases = workflows.reduce((acc, w) => acc + w.phases, 0);
 const agentWorkflows = workflows.filter((w) => w.agents.length > 0);
-
-const categoryOrder: WorkflowCategory[] = [
-  "planning",
-  "implementation",
-  "quality",
-  "research",
-  "creation",
-];
 
 export default function WorkflowsPage() {
   return (
@@ -58,12 +44,6 @@ export default function WorkflowsPage() {
             </span>
             <span>
               <span className="font-semibold text-home-text">
-                {totalPhases}
-              </span>{" "}
-              phases total
-            </span>
-            <span>
-              <span className="font-semibold text-home-text">
                 {agentWorkflows.length}
               </span>{" "}
               use agents
@@ -91,10 +71,7 @@ export default function WorkflowsPage() {
 
           <div className="grid gap-8 sm:grid-cols-3">
             {subagents.map((agent) => (
-              <div
-                key={agent.name}
-                className=""
-              >
+              <div key={agent.name}>
                 <div className="mb-2 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="size-1.5 rounded-full bg-home-agent" />
@@ -123,7 +100,7 @@ export default function WorkflowsPage() {
         </div>
       </section>
 
-      {/* Workflows by category — grouped list */}
+      {/* All Workflows */}
       <section className="w-full px-4 pt-12 pb-24 sm:px-6 sm:pt-16">
         <div className="mx-auto max-w-5xl">
           <p className="mb-3 font-mono text-xs font-normal tracking-[0.1em] uppercase text-home-text-muted">
@@ -133,89 +110,55 @@ export default function WorkflowsPage() {
             All Workflows
           </h2>
 
-          {categoryOrder.map((cat) => {
-            const meta = categoryMeta[cat];
-            const catWorkflows = workflows.filter((w) => w.category === cat);
-            if (catWorkflows.length === 0) return null;
-
-            return (
-              <div key={cat} className="mb-16 last:mb-0">
-                {/* Category header */}
-                <div className="mb-4 flex items-center gap-3">
-                  <h3 className="text-lg font-semibold text-home-text">
-                    {meta.label}
-                  </h3>
-                  <span className="font-mono text-xs text-home-text-muted">
-                    {catWorkflows.length} workflow
-                    {catWorkflows.length > 1 ? "s" : ""}
+          <div>
+            {workflows.map((workflow) => (
+              <a
+                key={workflow.name}
+                href={`${GITHUB_REPO}/tree/main/skills/${workflow.name}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex gap-4 border-b border-b-home-border-subtle py-6 transition-colors duration-150 hover:bg-home-surface/50 last:border-b-0 sm:gap-6"
+              >
+                {/* File count */}
+                <div className="flex w-10 shrink-0 flex-col items-center sm:w-12">
+                  <span className="font-mono text-xl font-semibold leading-none text-home-text sm:text-2xl">
+                    {String(workflow.files.length).padStart(2, "0")}
+                  </span>
+                  <span className="mt-1 font-mono text-[9px] uppercase tracking-wider text-home-text-muted">
+                    files
                   </span>
                 </div>
 
-                {/* Workflow rows */}
-                <div>
-                  {catWorkflows.map((workflow) => (
-                    <div
-                      key={workflow.name}
-                      className="flex gap-4 border-b border-b-home-border-subtle py-6 last:border-b-0 sm:gap-6"
-                    >
-                      {/* Phase number — departure board element */}
-                      <div className="flex w-10 shrink-0 flex-col items-center sm:w-12">
-                        <span className="font-mono text-xl font-semibold leading-none text-home-text sm:text-2xl">
-                          {String(workflow.phases).padStart(2, "0")}
+                {/* Content */}
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-3">
+                    <h4 className="text-sm font-semibold text-home-text">
+                      {workflow.title}
+                    </h4>
+                    <InstallButton type="workflow" name={workflow.name} />
+                  </div>
+                  <p className="mt-1 max-w-[55ch] text-sm font-light leading-relaxed text-home-text-muted">
+                    {workflow.description}
+                  </p>
+
+                  {/* Agent badges */}
+                  {workflow.agents.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1">
+                      {workflow.agents.map((agent) => (
+                        <span
+                          key={agent}
+                          className="inline-flex items-center gap-1 border border-home-border-subtle bg-white px-2 py-0.5 font-mono text-[10px] text-home-text-muted dark:bg-home-surface"
+                        >
+                          <span className="size-1.5 rounded-full bg-home-agent" />
+                          {agent}
                         </span>
-                        <span className="mt-1 font-mono text-[9px] uppercase tracking-wider text-home-text-muted">
-                          phases
-                        </span>
-                      </div>
-
-                      {/* Content */}
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-start justify-between gap-3">
-                          <h4 className="text-sm font-semibold text-home-text">
-                            {workflow.title}
-                          </h4>
-                          <InstallButton
-                            type="workflow"
-                            name={workflow.name}
-                          />
-                        </div>
-                        <p className="mt-1 max-w-[55ch] text-sm font-light leading-relaxed text-home-text-muted">
-                          {workflow.description}
-                        </p>
-
-                        {/* Steps — vertical list */}
-                        <ol className="mt-3 flex flex-col gap-1 font-mono text-[11px] text-home-text-muted">
-                          {workflow.steps.map((step, i) => (
-                            <li key={step} className="flex items-baseline gap-2">
-                              <span className="shrink-0 text-home-text-muted/40">
-                                {String(i + 1).padStart(2, "0")}
-                              </span>
-                              <span>{step}</span>
-                            </li>
-                          ))}
-                        </ol>
-
-                        {/* Agent badges */}
-                        {workflow.agents.length > 0 && (
-                          <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1">
-                            {workflow.agents.map((agent) => (
-                              <span
-                                key={agent}
-                                className="inline-flex items-center gap-1 border border-home-border-subtle bg-white px-2 py-0.5 font-mono text-[10px] text-home-text-muted dark:bg-home-surface"
-                              >
-                                <span className="size-1.5 rounded-full bg-home-agent" />
-                                {agent}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
+                      ))}
                     </div>
-                  ))}
+                  )}
                 </div>
-              </div>
-            );
-          })}
+              </a>
+            ))}
+          </div>
         </div>
       </section>
 

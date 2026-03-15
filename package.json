@@ -6,24 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "postinstall": "fumadocs-mdx",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "sync-skills": "node scripts/sync-skills.mjs"
+    "sync": "node scripts/sync-all.mjs ../skills"
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",
     "@vercel/analytics": "^1.6.1",
-    "fumadocs-core": "^16.6.3",
-    "fumadocs-mdx": "^14.2.7",
-    "fumadocs-ui": "^16.6.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "next": "^16.1.6",
+    "next-themes": "^0.4.6",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
-    "@types/mdx": "^2.0.13",
     "@types/node": "^25.2.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

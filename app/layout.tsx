@@ -1,7 +1,7 @@
 import './global.css';
 import { Analytics } from '@vercel/analytics/next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import { RootProvider } from 'fumadocs-ui/provider/next';
+import { ThemeProvider } from 'next-themes';
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
 
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     default: 'Claude Craft',
   },
   description:
-    'Bilingual (FR/EN) copy-paste prompt templates for Claude Code, leveraging skills, MCP servers, and agent swarms.',
+    'Multi-agent workflows and community skills for Claude Code.',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -31,8 +31,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${geistSans.variable} ${geistMono.variable}`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-screen flex-col">
-        <RootProvider>{children}</RootProvider>
+      <body className="flex min-h-screen flex-col bg-home-bg text-home-text">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>

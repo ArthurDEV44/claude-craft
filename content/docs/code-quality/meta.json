@@ -1,9 +1,0 @@
-{
-  "title": "Code Quality",
-  "pages": [
-    "optimize-code",
-    "refactor-code",
-    "security-audit",
-    "debug-error"
-  ]
-}

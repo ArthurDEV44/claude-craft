@@ -1,62 +1,9 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { workflows, subagents } from '@/lib/workflows-data';
+import { skills } from '@/lib/skills-data';
 
 const GITHUB_URL = 'https://github.com/ArthurDEV44/claude-craft';
-
-const categories = [
-  {
-    title: 'PRD & Planning',
-    description: 'Generate and review Product Requirements Documents',
-    href: '/docs/prd-planning/ux-redesign-prd',
-    items: [
-      'UX Redesign PRD',
-      'Design Exploration PRD',
-      'GitHub Issue PRD',
-      'Review PRD',
-      'Implement PRD',
-    ],
-  },
-  {
-    title: 'Code Quality',
-    description: 'Optimize, refactor, audit, and debug your code',
-    href: '/docs/code-quality/optimize-code',
-    items: ['Optimize Code', 'Refactor Code', 'Security Audit', 'Debug Error'],
-  },
-  {
-    title: 'Design',
-    description: 'Review and improve component design with professional inspiration',
-    href: '/docs/design/design-review-component',
-    items: ['Design Review Component'],
-  },
-  {
-    title: 'DevOps & Migration',
-    description: 'Build, deploy, rename, and migrate your stack',
-    href: '/docs/devops/pull-build-deploy',
-    items: ['Pull Build Deploy', 'Rename Codebase', 'Migrate Stack'],
-  },
-  {
-    title: 'Skills',
-    description: 'Create and update Claude Code skills',
-    href: '/docs/skills/create-skill',
-    items: ['Create Skill', 'Update Skill'],
-  },
-  {
-    title: 'Community Skills',
-    description: 'Browse 35+ ready-to-install skills for Rust, frontend, 3D, and more',
-    href: '/skills',
-    items: ['Rust Ecosystem', 'Frontend Frameworks', '3D & Shaders', 'Dev Tools'],
-  },
-];
-
-/* Bento grid column spans — size encodes importance */
-const gridSpans = [
-  'col-span-12 md:col-span-7',
-  'col-span-12 md:col-span-5',
-  'col-span-12 sm:col-span-6 md:col-span-3',
-  'col-span-12 sm:col-span-6 md:col-span-5',
-  'col-span-12 sm:col-span-12 md:col-span-4',
-  'col-span-12',
-];
 
 function ArrowRightIcon({ className }: { className?: string }) {
   return (
@@ -102,45 +49,60 @@ function LinkedInIcon({ className }: { className?: string }) {
 }
 
 export default function HomePage() {
-  const primaryCats = categories.slice(0, 2);
-  const secondaryCats = categories.slice(2, 5);
-  const communityCat = categories[5];
+  const totalFiles = workflows.reduce((acc, w) => acc + w.files.length, 0);
 
   return (
     <main className="flex min-w-0 flex-1 flex-col overflow-x-hidden">
-      {/* Hero — left-aligned, typography-driven, grain texture */}
+      {/* Hero */}
       <section className="grain w-full px-4 pt-20 pb-24 sm:px-6 sm:pt-32 md:pb-32">
         <div className="mx-auto max-w-5xl">
           <p className="mb-6 font-mono text-xs font-normal tracking-[0.1em] uppercase text-home-text-muted">
-            Prompt templates for Claude Code
+            Workflows & Skills for Claude Code
           </p>
           <h1 className="mb-6 max-w-[15ch] font-extrabold leading-[0.95] tracking-[-0.04em] text-home-text text-[clamp(3rem,2rem+4vw,5.5rem)]">
             Claude Craft
           </h1>
           <p className="mb-10 max-w-[50ch] text-lg font-light leading-relaxed text-home-text-muted">
-            Ship faster with ready-made prompts — PRD generation, code review,
-            design audits, security scans, and more.
+            Multi-agent workflows and community skills that extend Claude Code
+            with orchestration pipelines, specialized knowledge, and ready-to-install
+            capabilities.
           </p>
 
           {/* Stats */}
           <div className="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs text-home-text-muted">
             <span>
-              <span className="font-semibold text-home-text">15</span> prompts
+              <span className="font-semibold text-home-text">
+                {workflows.length}
+              </span>{' '}
+              workflows
             </span>
             <span>
-              <span className="font-semibold text-home-text">6</span>{' '}
-              categories
+              <span className="font-semibold text-home-text">
+                {subagents.length}
+              </span>{' '}
+              subagents
             </span>
             <span>
-              <span className="font-semibold text-home-text">FR/EN</span>{' '}
-              bilingual
+              <span className="font-semibold text-home-text">
+                {skills.length}
+              </span>{' '}
+              skills
+            </span>
+            <span>
+              <span className="font-semibold text-home-text">
+                {totalFiles}
+              </span>{' '}
+              files
             </span>
           </div>
 
           {/* CTAs */}
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button size="lg" render={<Link href="/docs" />}>
-              Browse Prompts
+            <Button size="lg" render={<Link href="/workflows" />}>
+              Browse Workflows
+            </Button>
+            <Button size="lg" variant="outline" render={<Link href="/skills" />}>
+              Browse Skills
             </Button>
             <Button
               size="lg"
@@ -160,77 +122,71 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Categories — bento grid */}
+      {/* Two sections */}
       <section className="w-full px-4 pt-16 pb-24 sm:px-6 sm:pt-24">
         <div className="mx-auto max-w-5xl">
-          <p className="mb-3 font-mono text-xs font-normal tracking-[0.1em] uppercase text-home-text-muted">
-            Categories
-          </p>
-          <h2 className="mb-12 font-extrabold tracking-[-0.02em] text-home-text text-[clamp(1.5rem,1.2rem+1.5vw,2rem)]">
-            Explore by workflow
-          </h2>
-
           <div className="grid grid-cols-12 gap-4 sm:gap-5">
-            {/* Primary categories — large cards, accent left border */}
-            {primaryCats.map((cat, i) => (
-              <Link
-                key={cat.title}
-                href={cat.href}
-                className={`group ${gridSpans[i]} rounded-none border-l border-l-home-border p-6 outline-none transition-colors duration-150 hover:bg-home-surface focus-visible:ring-2 focus-visible:ring-ring`}
-              >
-                <p className="mb-1 font-mono text-xs tracking-[0.08em] uppercase text-home-text-muted">
-                  {cat.title}
-                </p>
-                <p className="mb-4 max-w-[45ch] text-sm font-light leading-relaxed text-home-text-muted">
-                  {cat.description}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {cat.items.map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-sm border border-home-border px-2.5 py-1 font-mono text-xs text-home-text"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </Link>
-            ))}
-
-            {/* Secondary categories — smaller, surface background */}
-            {secondaryCats.map((cat, i) => (
-              <Link
-                key={cat.title}
-                href={cat.href}
-                className={`group ${gridSpans[i + 2]} rounded-sm border border-home-border-subtle bg-home-surface p-5 outline-none transition-colors duration-150 hover:border-home-border focus-visible:ring-2 focus-visible:ring-ring`}
-              >
-                <p className="mb-1 text-sm font-semibold text-home-text">
-                  {cat.title}
-                </p>
-                <p className="mb-3 text-sm font-light text-home-text-muted">
-                  {cat.description}
-                </p>
-                <p className="font-mono text-xs text-home-text-muted">
-                  {cat.items.join(' \u00b7 ')}
-                </p>
-              </Link>
-            ))}
-
-            {/* Community Skills — full-width banner */}
+            {/* Workflows card */}
             <Link
-              href={communityCat.href}
-              className="group col-span-12 flex items-center justify-between gap-4 rounded-sm border border-home-border bg-home-surface p-6 outline-none transition-colors duration-150 hover:border-home-accent focus-visible:ring-2 focus-visible:ring-ring"
+              href="/workflows"
+              className="group col-span-12 md:col-span-7 rounded-sm border-l border-l-home-border p-6 outline-none transition-colors duration-150 hover:bg-home-surface focus-visible:ring-2 focus-visible:ring-ring"
             >
+              <p className="mb-1 font-mono text-xs tracking-[0.08em] uppercase text-home-text-muted">
+                Multi-agent orchestration
+              </p>
+              <p className="mb-4 max-w-[45ch] text-sm font-light leading-relaxed text-home-text-muted">
+                {workflows.length} multi-step pipelines that orchestrate subagents
+                for planning, implementation, review, debugging, and more.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {['Build SaaS', 'Write PRD', 'Meta Code', 'Meta Debug', 'Review Story', 'Security Review'].map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-sm border border-home-border px-2.5 py-1 font-mono text-xs text-home-text"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </Link>
+
+            {/* Skills card */}
+            <Link
+              href="/skills"
+              className="group col-span-12 md:col-span-5 rounded-sm border-l border-l-home-border p-6 outline-none transition-colors duration-150 hover:bg-home-surface focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <p className="mb-1 font-mono text-xs tracking-[0.08em] uppercase text-home-text-muted">
+                Community skills
+              </p>
+              <p className="mb-4 max-w-[45ch] text-sm font-light leading-relaxed text-home-text-muted">
+                {skills.length}+ ready-to-install skills for Rust, frontend
+                frameworks, 3D shaders, CUDA, AI, and more.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {['Rust', 'Frontend', 'Shaders', 'Go', 'CUDA', 'AI'].map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-sm border border-home-border px-2.5 py-1 font-mono text-xs text-home-text"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </Link>
+
+            {/* Subagents banner */}
+            <div className="col-span-12 flex items-center justify-between gap-4 rounded-sm border border-home-border-subtle bg-home-surface p-6">
               <div>
                 <p className="mb-1 text-sm font-semibold text-home-text">
-                  {communityCat.title}
+                  Subagents
                 </p>
                 <p className="text-sm font-light text-home-text-muted">
-                  {communityCat.description}
+                  3 specialized agents (docs, explore, websearch) that workflows
+                  delegate to — each read-only, running on Sonnet.
                 </p>
               </div>
-              <ArrowRightIcon className="size-4 shrink-0 text-home-text-muted transition-colors duration-150 group-hover:text-home-accent" />
-            </Link>
+              <ArrowRightIcon className="size-4 shrink-0 text-home-text-muted" />
+            </div>
           </div>
         </div>
       </section>

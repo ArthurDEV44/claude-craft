@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { GITHUB_REPO, GITHUB_RAW } from "@/lib/workflows-data";
 
 function CopyIcon({ className }: { className?: string }) {
   return (
@@ -47,10 +48,8 @@ function DownloadIcon({ className }: { className?: string }) {
   );
 }
 
-const BASE_URL = "https://claude-craft-two.vercel.app";
-
 export function InstallAllBlock() {
-  const command = `curl -fsSL ${BASE_URL}/install.sh | bash`;
+  const command = `npx skills add ${GITHUB_REPO}`;
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(() => {
@@ -101,7 +100,11 @@ export function InstallButton({
   type: "workflow" | "agent";
   name: string;
 }) {
-  const command = `curl -fsSL ${BASE_URL}/install.sh | bash -s -- ${type} ${name}`;
+  const command =
+    type === "workflow"
+      ? `npx skills add ${GITHUB_REPO} --skill ${name}`
+      : `curl -fsSL ${GITHUB_RAW}/agents/${name}.md -o ~/.claude/agents/${name}.md`;
+
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(() => {

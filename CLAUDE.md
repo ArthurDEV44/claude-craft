@@ -4,39 +4,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Claude Craft — A collection of bilingual (FR/EN) copy-paste prompt templates for Claude Code, leveraging skills, MCP servers (fontofweb, context7), and agent swarms. This is **not** a software project — no build system, no tests, no dependencies.
+Claude Craft — A showcase site for Claude Code multi-agent workflows and community skills. Built with Next.js 16 (App Router), Tailwind CSS v4, and deployed on Vercel.
 
 ## Structure
 
-- `prompts/` — All prompt templates as Markdown files
-  - `ux-redesign-prd.md` — Generate a UX/UI redesign PRD using skills (/ralph-tui-prd, /coss-ui, /frontend-design, /web-design-guidelines) and MCP (fontofweb, context7), plus follow-up to enrich user-stories with MCP references
-  - `implement-prd.md` — Implement from a PRD: single user-story, full PRD with agent swarm, or full PRD with /agent-swarm skill
-  - `optimize-code.md` — Explore and optimize code at file, folder, or PRD level using context7
-  - `design-exploration-prd.md` — Explore UI code with fontofweb design research + context7 stack learning, then write a PRD
-  - `github-issue-prd.md` — Read a GitHub issue, explore the stack via context7, then write a PRD with /ralph-tui-prd
-  - `design-review-component.md` — Review UI design at single file, folder, page, or full codebase level using fontofweb for professional design inspiration and context7 for stack understanding
-  - `pull-build-deploy.md` — Git pull then build and deploy the project
-  - `rename-codebase.md` — Rename folders and files following stack best practices using context7
-  - `create-skill.md` — Create a new skill with /skill-creator and context7 to master the topic, save locally and to community folder
-  - `update-skill.md` — Update an existing skill with /skill-creator and context7, save to community folder, commit and push
-  - `review-prd.md` — Audit an existing PRD for consistency, completeness, and up-to-date MCP/skills references using context7
-  - `refactor-code.md` — Refactor code structure at file or folder level (extract functions, separate responsibilities, apply patterns) using context7 and relevant skills
-  - `migrate-stack.md` — Full codebase audit then migration PRD with /ralph-tui-prd, using context7 for both source and target stacks
-  - `security-audit.md` — Security audit for OWASP top 10, outdated dependencies, exposed secrets, with context7 and web search for recent CVEs
-  - `debug-error.md` — Investigate and fix errors from stack traces or logs (build, runtime, production) using context7 and relevant skills
+- `app/(home)/page.tsx` — Homepage with overview of workflows and skills
+- `app/(home)/workflows/` — Workflows catalog: 13 multi-agent pipelines and 3 subagents with install buttons
+- `app/(home)/skills/` — Community skills catalog: 40+ skills across Rust, frontend, 3D shaders, CUDA, AI, and more
+- `lib/workflows-data.ts` — Auto-generated workflow and subagent data (from skills repo)
+- `lib/skills-data.ts` — Auto-generated skills data (from skills repo)
+- `scripts/sync-all.mjs` — Reads `../skills/` repo, parses SKILL.md frontmatter, generates both data files
+- `components/skills-grid.tsx` — Client-side filterable/searchable skills grid
+- `components/ui/` — UI components built on Base UI and Tailwind CSS
+- `public/install.sh` — Shell installer for workflows and agents
 
-## Template Conventions
+## Key Conventions
 
-- Each file contains variants by scope (single file, folder, full PRD, etc.)
-- Every prompt has a **FR** and **EN** version — both are equivalent, keep them in sync
-- Prompts use `@path` references (e.g., `@src/components/`, `@tasks/prd-name.md`) as placeholders for the user to substitute
-- Prompts explicitly reference which skills (`/skill-name`) and MCP servers to use
-- PRD-related prompts always output to a `@tasks/` folder and use `/ralph-tui-prd`
-- Agent swarm prompts remind to close tmux panes and update the PRD checklist after completion
-
-## When Editing Templates
-
-- Keep FR and EN versions in sync within each file
-- Each fenced code block is a standalone prompt the user copy-pastes
-- Follow existing structure: H1 for template name, H2 for variant, H3 for language (FR/EN)
-- Always specify which skills and MCP servers the prompt relies on
+- Package manager: **bun** (never npm)
+- Design tokens: OKLCH-based custom properties in `app/global.css` (light + dark mode)
+- Theme: `next-themes` with class-based dark mode
+- UI components: `@base-ui/react` + `class-variance-authority`
+- No fumadocs, no MDX, no documentation pages — just the two catalog pages
+- Data is auto-generated: run `bun run sync` to regenerate from `../skills/` repo
+- Workflows are skills with `model:` or `argument-hint:` in SKILL.md frontmatter
+- Install: workflows use `npx skills add`, agents use `curl` from GitHub raw
